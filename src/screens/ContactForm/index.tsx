@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useCallback} from 'react';
 
 import api from '../../services/Api'
 
@@ -34,7 +34,7 @@ const [EmptyField, setEmptyField] = useState(false);
 const [loading, setLoading] = useState(false);
 
 //Function-send-E-mail
-async function handleSendEmail(){
+const handleSendEmail = useCallback(async () => {
 
   try{
 
@@ -72,7 +72,7 @@ async function handleSendEmail(){
   }finally {
     setLoading(false);
   }
-}
+}, [user_id, service_id, template_id, template_params]);
 
   return(
     <ContainerForm>
@@ -109,7 +109,7 @@ async function handleSendEmail(){
         numberOfLines={30}
         />
 
-        <Button loading={loading} onPress={async () => {handleSendEmail();}} >
+        <Button loading={loading} onPress={handleSendEmail} >
         <TextButton>{loading ? '....' : 'send'}</TextButton>  
         </Button>
 
